@@ -22,11 +22,11 @@ class SelectExample extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ReactiveWidget(
-                ref: _ref,
-                builder: (context, value) {
-                  return Text(value.toString());
-                }),
+            // ReactiveWidget(
+            //     ref: _ref,
+            //     builder: (context, value) {
+            //       return Text(value.toString());
+            //     }),
             ReactiveWidget(
                 ref: _ref.select((value) => value['Hello']),
                 builder: (context, value) {

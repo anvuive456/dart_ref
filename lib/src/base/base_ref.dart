@@ -7,19 +7,8 @@ abstract class BaseRef<T> {
   Stream<T> get changes;
 
   /// Generic select method for all Ref types.
-  Ref<R> select<R>(R Function(T parent) selector) {
-    final selectedValue = selector(state);
-    final selectedRef = Ref<R>(selectedValue);
-
-    changes.listen((parentValue) {
-      final newState = selector(parentValue);
-      if (newState != selectedRef.state) {
-        selectedRef.state = newState;
-      }
-    });
-
-    return selectedRef;
-  }
+  ReadonlyRef<R, T> select<R>(ReadonlyRefSelector<R, T> selector) =>
+      ReadonlyRef<R, T>(this, selector);
 
   ValueNotifier<T> listenable() {
     final notifier = ValueNotifier(state);

@@ -24,18 +24,15 @@ class ReactiveWidget<T> extends StatefulWidget {
 }
 
 class _ReactiveState<T> extends State<ReactiveWidget<T>> {
-  late T _innerValue;
-  late StreamSubscription<T> subscription;
+  late ValueNotifier<T> _valueNotifier;
 
   @override
   void initState() {
-    _innerValue = widget.ref.state;
+    _valueNotifier = ValueNotifier(widget.ref.state);
 
-    subscription = widget.ref.changes.listen(
+    widget.ref.changes.listen(
       (event) {
-        setState(() {
-          _innerValue = event;
-        });
+        _valueNotifier.value = event;
       },
     );
 
@@ -44,14 +41,16 @@ class _ReactiveState<T> extends State<ReactiveWidget<T>> {
 
   @override
   dispose() {
-    subscription.cancel();
     // widget.ref.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => widget.builder(
-        context,
-        _innerValue,
+  Widget build(BuildContext context) => ValueListenableBuilder<T>(
+        valueListenable: _valueNotifier,
+        builder: (context, value, child) => widget.builder(
+          context,
+          value,
+        ),
       );
 }

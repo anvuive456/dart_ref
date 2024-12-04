@@ -28,15 +28,6 @@ class ObservedRef<T> extends BaseRef<T> {
     return _streamController.stream;
   }
 
-  // void addObserver(BaseObserver<T> observer) {
-  //   _observers.add(observer);
-  //   observer.onStateChanged(
-  //     _source.runtimeType,
-  //     _lastState,
-  //     _source.state,
-  //   ); // Thông báo state hiện tại
-  // }
-
   void _notifyStateChanged(T currentState, T nextState) {
     for (var observer in _observers) {
       observer.onStateChanged(

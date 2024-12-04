@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ref/src/base/base_ref.dart';
+import 'package:ref/src/observer/base_observer.dart';
 
 /// A generic class to hold and manage the state.
 class Ref<T> extends BaseRef<T> {
@@ -48,6 +49,6 @@ class Ref<T> extends BaseRef<T> {
 }
 
 /// A helper function to create a new state.
-Ref<T> ref<T>(T initialValue) {
+Ref<T> ref<T>(T initialValue, {List<BaseObserver<T>>? observers}) {
   return Ref<T>(initialValue);
 }

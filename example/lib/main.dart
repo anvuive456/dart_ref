@@ -19,10 +19,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       theme: ThemeData(),
       routerConfig: GoRouter(
-        refreshListenable: _routeRef.listenable(),
-        redirect: (context, state) {
-          return _routeRef.state;
-        },
         routes: [
           GoRoute(
               path: '/',

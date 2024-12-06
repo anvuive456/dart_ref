@@ -13,11 +13,27 @@ class LogObserver extends BaseObserver {
   @override
   void onStateChanged(Type refType, currentState, nextState) {
     if (currentState != nextState) {
-      logger.w(
-        '$refType: state has not changed but rebuilt. Current state: $currentState, next state: $nextState',
-      );
+      logger.i('$refType: state changed from $currentState to $nextState');
+
       return;
     }
-    logger.i('$refType: state changed from $currentState to $nextState');
+    logger.w(
+      '$refType: state has not changed but rebuilt. Current state: $currentState, next state: $nextState',
+    );
+  }
+
+  @override
+  void onListenerAdded(Type refType, String listenerName) {
+    logger.i('$refType listener added: $listenerName');
+  }
+
+  @override
+  void onListenerRemoved(Type refType, String listenerName) {
+    logger.i('$refType listener removed: $listenerName');
+  }
+
+  @override
+  void onListenersCleared(Type refType) {
+    logger.i('$refType all listeners cleared');
   }
 }

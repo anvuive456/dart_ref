@@ -1,18 +1,8 @@
-import 'dart:async';
+import 'package:ref/src/transformer/debounce_transformer.dart';
+import 'package:ref/src/transformer/state_transformer.dart';
 
-StreamTransformer<T, T> debounceTransformer<T>(
+StateTransformer<T> debounceTransformer<T>(
   Duration delay,
 ) {
-  Timer? timer;
-
-  return StreamTransformer<T, T>.fromHandlers(
-    handleData: (data, sink) {
-      if (timer?.isActive ?? false) {
-        timer?.cancel();
-      }
-      timer = Timer(delay, () {
-        sink.add(data);
-      });
-    },
-  );
+  return DebounceTransformer(delay);
 }

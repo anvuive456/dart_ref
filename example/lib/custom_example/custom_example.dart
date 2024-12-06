@@ -9,22 +9,31 @@ class CustomRefExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveWidget(
-      ref: customController,
-      builder: (BuildContext context, CustomState value) {
-        return Column(
-          children: [
-            TextButton(
-              onPressed: value.loading
-                  ? null
-                  : () {
-                      customController.increase();
-                    },
-              child: Text('Click to increase: ${value.value}'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Custom example'),
+      ),
+      body: ReactiveWidget(
+        ref: customController,
+        builder: (BuildContext context, CustomState value) {
+          return Center(
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: value.loading
+                      ? null
+                      : () {
+                          customController.increase();
+                        },
+                  child: Text(value.loading
+                      ? 'Please wait'
+                      : 'Click to increase: ${value.value}'),
+                ),
+              ],
             ),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -15,6 +15,34 @@ sealed class AsyncValue<T> {
     this.error,
     this.stackTrace,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+
+    return other is AsyncValue<T> &&
+        other.data == data &&
+        other.hasData == hasData &&
+        other.hasError == hasError &&
+        other.isLoading == isLoading &&
+        other.error == error &&
+        other.stackTrace?.toString() == stackTrace?.toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        data,
+        hasData,
+        hasError,
+        isLoading,
+        error,
+        stackTrace?.toString(),
+      );
+
+  @override
+  String toString() =>
+      '$runtimeType: has data:$hasData, data:$data, loading:$isLoading, has error: $hasError, error:$error,';
 }
 
 /// Async operation is in progress.

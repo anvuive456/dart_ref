@@ -1,36 +1,27 @@
-import 'dart:async';
-
 import 'package:ref/src/base/base_ref.dart';
+import 'package:ref/src/transformer/state_transformer.dart';
 
 class TransformRef<T> extends BaseRef<T> {
   final BaseRef<T> _source;
-  final StreamTransformer<T, T> _transformer;
-  late Stream<T> _transformedStream;
+  final StateTransformer<T> _transformer;
 
-  TransformRef(
-    this._source,
-    this._transformer,
-  ) {
-    _transformedStream = _source.changes.transform(
-      _transformer,
-    );
+  TransformRef(this._source, this._transformer) : super(_source.state) {
+    _source.addListener((value) {
+      state = value;
+    });
   }
 
   @override
-  T get state => _source.state;
-
-  @override
-  Stream<T> get changes => _transformedStream;
-
-  @override
-  void dispose() {
-    _source.dispose();
+  set state(T newState) {
+    _transformer.onUpdate(newState, (value) {
+      super.state = value;
+    });
   }
 }
 
 TransformRef transformRef<T>(
   BaseRef<T> source,
-  StreamTransformer<T, T> transformer,
+  StateTransformer<T> transformer,
 ) =>
     TransformRef(
       source,

@@ -6,24 +6,31 @@ class FutureExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveWidget(
-      ref: futureRef(() async => Future.delayed(
-            const Duration(seconds: 3),
-            () {
-              return 'Hello world';
-            },
-          )),
-      builder: (context, state) {
-        if (state.isLoading) {
-          return const Text(
-            'Please wait...',
-          );
-        }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Future example'),
+      ),
+      body: Center(
+        child: ReactiveWidget(
+          ref: futureRef(() async => Future.delayed(
+                const Duration(seconds: 3),
+                () {
+                  return 'Hello world';
+                },
+              )),
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Text(
+                'Please wait...',
+              );
+            }
 
-        return Text(
-          state.data!,
-        );
-      },
+            return Text(
+              state.data!,
+            );
+          },
+        ),
+      ),
     );
   }
 }

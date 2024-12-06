@@ -5,7 +5,7 @@ class CustomState {
   final int value;
 
   const CustomState({
-    this.loading = true,
+    this.loading = false,
     this.value = 0,
   });
 
@@ -15,6 +15,9 @@ class CustomState {
       value: value ?? this.value,
     );
   }
+
+  @override
+  String toString() => 'loading: $loading,value: $value';
 }
 
 class CustomController extends Ref<CustomState> {
@@ -24,6 +27,9 @@ class CustomController extends Ref<CustomState> {
         );
 
   void increase() async {
+    state = state.copyWith(
+      loading: true,
+    );
     await Future.delayed(const Duration(seconds: 2));
     state = state.copyWith(
       loading: false,

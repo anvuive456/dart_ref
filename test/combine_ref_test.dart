@@ -29,9 +29,6 @@ void main() {
 
       expect(combinedRef.state, equals(3));
 
-      final changes = <int>[];
-      combinedRef.changes.listen((value) => changes.add(value));
-
       ref1.state = 5; // Thay đổi ref1
       expect(combinedRef.state, equals(7));
 
@@ -39,7 +36,6 @@ void main() {
       expect(combinedRef.state, equals(15));
 
       await Future.delayed(Duration(milliseconds: 100));
-      print(changes);
 
       // expect(
       //     changes, equals([3, 7, 15])); // Các giá trị lần lượt: 1+2, 5+2, 5+10

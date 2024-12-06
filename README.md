@@ -108,7 +108,7 @@ class MyGlobalObserver<T> extends BaseObserver<T> {
 }
 
 void main() {
-  GlobalObserverManager().addObserver(observer);
+  GlobalObserverManager().addObserver(MyGlobalObserver());
 
   runApp(MyApp());
 }

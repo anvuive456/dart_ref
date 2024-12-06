@@ -2,20 +2,22 @@ import 'package:ref/src/base/base_ref.dart';
 
 class CombineRef<T> extends BaseRef<T> {
   final List<BaseRef> _refs;
-  final T Function(Iterable<dynamic> ref) _combiner;
+  final T Function(List<dynamic> ref) _combiner;
 
   CombineRef(
     this._refs,
     this._combiner,
   ) : super(
           _combiner(
-            _refs.map((e) => e.state),
+            _refs.map((e) => e.state).toList(),
           ),
         ) {
     for (final ref in _refs) {
       ref.addListener(
         (value) {
-          state = _combiner(_refs.map((e) => e.state));
+          state = _combiner(
+            _refs.map((e) => e.state).toList(),
+          );
         },
       );
     }

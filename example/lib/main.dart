@@ -1,6 +1,8 @@
+import 'package:example/advanced_example/advanced_example.dart';
 import 'package:example/basic_example/basic_example.dart';
 import 'package:example/custom_example/custom_example.dart';
 import 'package:example/future_example/future_example.dart';
+import 'package:example/improved_example/improved_example.dart';
 import 'package:example/select_example/select_example.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,6 +48,18 @@ final goRouter = GoRouter(
                       context.push('/custom_example');
                     },
                   ),
+                  ElevatedButton(
+                    child: const Text('Improved Example'),
+                    onPressed: () {
+                      context.push('/improved_example');
+                    },
+                  ),
+                  ElevatedButton(
+                    child: const Text('Advanced Example'),
+                    onPressed: () {
+                      context.push('/advanced_example');
+                    },
+                  ),
                 ],
               ),
             ),
@@ -66,6 +80,14 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/custom_example',
       builder: (context, state) => const CustomRefExample(),
+    ),
+    GoRoute(
+      path: '/improved_example',
+      builder: (context, state) => const ImprovedExample(),
+    ),
+    GoRoute(
+      path: '/advanced_example',
+      builder: (context, state) => const AdvancedExample(),
     ),
   ],
 );

@@ -7,3 +7,8 @@
 pubspec.lock
 .idea
 /build/
+.vscode
+/example/build/
+
+# FVM Version Cache
+.fvm/

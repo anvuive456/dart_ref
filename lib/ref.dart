@@ -1,6 +1,7 @@
-/// Support for doing something awesome.
+/// A lightweight and efficient state management library for Flutter.
 ///
-/// More dartdocs go here.
+/// This library provides a reactive state management solution with features like
+/// ref, future ref, combine ref, transform ref, and more.
 library;
 
 export 'src/base/base.dart';
@@ -8,4 +9,5 @@ export 'src/widget/widget.dart';
 export 'src/utils/utils.dart';
 export 'src/async_value/async_value.dart';
 export 'src/observer/observer.dart';
-// TODO: Export any libraries intended for clients of this package.
+export 'src/provider/provider.dart';
+export 'src/transformer/transformer.dart';

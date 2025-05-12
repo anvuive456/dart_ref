@@ -5,3 +5,6 @@ export 'combine_ref.dart';
 export 'transform_ref.dart';
 export 'family_ref.dart';
 export 'readonly_ref.dart';
+export 'effect_ref.dart';
+export 'persistent_ref.dart';
+export 'replay_ref.dart';

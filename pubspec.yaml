@@ -1,6 +1,6 @@
 name: ref
 description: A simple state manager.
-version: 1.0.0
+version: 1.0.1
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -13,8 +13,7 @@ dependencies:
     sdk: flutter
   logger: ^2.5.0
   rxdart: ^0.28.0
-
-
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   lints: ^4.0.0

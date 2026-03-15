@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:ref/ref.dart';
+import 'package:ref/src/base/tracking_context.dart';
 import 'package:ref/src/listener_manager/listener_manager.dart';
 import 'package:ref/src/observer/global_observer_manager.dart';
 import 'package:ref/src/observer/ref_observer_mixin.dart';
@@ -62,7 +63,13 @@ abstract class BaseRef<T> with RefObserverMixin {
   bool shouldUpdate(T oldState, T newState) => oldState != newState;
 
   /// Lấy state hiện tại
-  T get state => _state;
+  ///
+  /// Nếu đang trong quá trình tracking (ComputedRef đang chạy compute),
+  /// ref này sẽ tự động được đăng ký là dependency.
+  T get state {
+    RefTrackingContext.onAccess?.call(this);
+    return _state;
+  }
 
   /// Cập nhật state và thông báo cho các listener
   ///

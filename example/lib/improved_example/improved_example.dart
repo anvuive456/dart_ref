@@ -28,15 +28,13 @@ class User {
   String toString() => 'User(name: $name, age: $age)';
 }
 
-// Tạo các ref
+// Tạo các ref nguồn
 final nameRef = ref('John');
 final ageRef = ref(30);
 
-// Sử dụng combine2Refs để kết hợp 2 ref
-final userRef = combine2Refs<String, int, User>(
-  nameRef,
-  ageRef,
-  (name, age) => User(name: name, age: age),
+// computedRef tự động phát hiện dependency vào nameRef và ageRef
+final userRef = computedRef<User>(
+  () => User(name: nameRef.state, age: ageRef.state),
 );
 
 // Sử dụng select để chỉ lắng nghe một phần của state
@@ -67,8 +65,6 @@ class _ImprovedExampleState extends State<ImprovedExample> {
     // Đăng ký effect và lưu hàm dispose
     _disposeEffect = userRef.effect((user) {
       print('User changed: $user');
-      // Có thể thực hiện các side effect khác ở đây
-      // Ví dụ: lưu vào local storage, gọi API, v.v.
     });
   }
 
@@ -76,7 +72,7 @@ class _ImprovedExampleState extends State<ImprovedExample> {
   void dispose() {
     nameController.dispose();
     ageController.dispose();
-    _disposeEffect(); // Hủy effect khi widget bị dispose
+    _disposeEffect();
     super.dispose();
   }
 
@@ -91,19 +87,18 @@ class _ImprovedExampleState extends State<ImprovedExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Sử dụng RefProvider để cung cấp ref cho widget tree
             RefProvider<User>(
               ref: userRef,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('User Info (using RefConsumer):'),
-                  // Sử dụng RefConsumer để tiêu thụ ref
                   RefConsumer<User>(
                     builder: (context, user) {
                       return Text(
                         'Name: ${user.name}, Age: ${user.age}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style:
+                            const TextStyle(fontWeight: FontWeight.bold),
                       );
                     },
                   ),
@@ -112,7 +107,6 @@ class _ImprovedExampleState extends State<ImprovedExample> {
               ),
             ),
             const Text('Name (using ReactiveWidget with select):'),
-            // Sử dụng ReactiveWidget với select
             ReactiveWidget(
               ref: userNameRef,
               builder: (context, name) {
@@ -154,9 +148,9 @@ class _ImprovedExampleState extends State<ImprovedExample> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Cập nhật trực tiếp userRef
-                userRef.state = User(name: 'Alice', age: 25);
-                // Cập nhật controllers để phản ánh giá trị mới
+                // Cập nhật các ref nguồn — userRef sẽ tự động recompute
+                nameRef.state = 'Alice';
+                ageRef.state = 25;
                 nameController.text = 'Alice';
                 ageController.text = '25';
               },
